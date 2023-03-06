@@ -51,5 +51,5 @@ spec:
                 ports:
                   - containerPort: 2023
                 env:
-                  - name: SITE_PORT
+                  - name: PORT
                     value: "2023"
