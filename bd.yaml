@@ -52,4 +52,4 @@ spec:
                   - containerPort: 2023
                 env:
                   - name: PORT
-                    value: 2023
+                    value: "2023"
