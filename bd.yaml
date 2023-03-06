@@ -1,0 +1,52 @@
+apiVersion: "cicd.innkeeper.run/v1alpha1"
+kind: BuildDeploy
+metadata:
+  name: innkeeper-site
+  namespace: innkeeper
+spec:
+  build:
+    dockerfile: ./Dockerfile
+    workdir: ./
+  git:
+    uri: git@github.com:InnKeeperDevOps/InnKeeperSite.git
+    secret: github-ssh
+  publish:
+    secret: git-repo
+    host: ghcr.io
+    tag: innkeeperdevops/innkeeper-site
+  ingress:
+    - name: innkeeper-main
+      domain: innkeeper.run
+      path: /
+      gateway:
+        - internet
+      port: 80
+    - name: innkeeper-www
+      domain: www.innkeeper.run
+      path: /
+      gateway:
+        - internet
+      port: 80
+  deploy:
+    namespace: innkeeper
+    name: innkeeper-site
+    handleContainer: 0
+    deployment:
+      metadata:
+        labels:
+          app: innkeeper-site
+      spec:
+        replicas: 2
+        selector:
+          matchLabels:
+            app: innkeeper-site
+        template:
+          metadata:
+            labels:
+              app: innkeeper-site
+          spec:
+            containers:
+              - name: innkeeper-site
+                image: nginx
+                ports:
+                  - containerPort: 80
