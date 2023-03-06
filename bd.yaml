@@ -20,13 +20,13 @@ spec:
       path: /
       gateway:
         - internet
-      port: 3000
+      port: 9023
     - name: innkeeper-www
       domain: www.innkeeper.run
       path: /
       gateway:
         - internet
-      port: 3000
+      port: 9023
   deploy:
     namespace: innkeeper
     name: innkeeper-site
@@ -49,4 +49,7 @@ spec:
               - name: innkeeper-site
                 image: nginx
                 ports:
-                  - containerPort: 3000
+                  - containerPort: 9023
+                env:
+                  - name: PORT
+                    value: "9023"
