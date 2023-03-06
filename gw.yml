@@ -5,6 +5,8 @@ metadata:
   namespace: innkeeper
 spec:
   gatewayClassName: istio
+  addresses:
+    - value: 10.0.52.80
   listeners:
     - name: http
       port: 80
